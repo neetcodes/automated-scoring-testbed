@@ -1,10 +1,17 @@
 function has(input, answers) {
     let retval = 0;
-    answers.forEach(answer => {
-        if (input.indexOf(answer.toLowerCase()) > -1) {
+    if (typeof(answers) == "string") {
+        if (input.indexOf(answers.toLowerCase()) > -1) {
             retval = 1;
         }
-    });
+    }
+    else {
+        answers.forEach(answer => {
+            if (input.indexOf(answer.toLowerCase()) > -1) {
+                retval = 1;
+            }
+        });
+    }
     return retval;
 }
 
@@ -31,7 +38,8 @@ function evaluateAnswers() {
     let answers = getAnswers(questions);
     questions.forEach(q => {
         let scoreLabel = document.getElementById(q + "_score");
-        let score = evaluationTable[q](answers[q].toLowerCase()).toString();
-        scoreLabel.innerHTML = "Score: " + score;
+        let score = evaluationTable[q](answers[q].toLowerCase());
+        if (score < 0) {score = 0;}
+        scoreLabel.innerHTML = "Score: " + score.toString();
     });
 }

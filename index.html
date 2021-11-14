@@ -48,23 +48,23 @@
         <div class="field">
           <p class=subtitle>Constructs used</p>
           <p>
-          Andean + (develop*/chang*/evol*/transition*) = 1pt <br>
-          1800 + 900 + (BC/B.C.) = 1pt
+          Andean & (develop*/chang*/evol*/transition*) = 1pt <br>
+          1800 & 900 & (BC/B.C.) = 1pt
           </p>
           
         </div>
         <div class="field">
             <p class=subtitle>Code</p>
-            <code>has(x, [...])</code> takes a list of possible synonyms of a keyword, and returns 1 if the student answer contains any, 0 if not.<br>
+            <code>has(x, [...])</code> is a function that takes a list of possible synonyms of a keyword, and returns 1 if the student answer contains any, 0 if not.<br>
             This value is then multiplied with the score multiplier.<br>
             <code>&&</code> is a logical operator meaning "and". Used to create score points if both keywords occur at the same time in the answer.
         </div>
         <div class="field">
             <textarea id="evaltable" class="textarea" rows=8>var evaluationTable = {
-    "q1": x => 1 * (has(x, ["Andean"]) && has(x, ["develop", "chang", "evol", "transition"]))
-                + 1 * (has(x, ["1800"]) && has(x, ["900"]) && has(x, ["BC", "B.C."])),
+    "q1": x => 1 * (has(x, "Andean") && has(x, ["develop", "chang", "evol", "transition"]))
+                + 1 * (has(x, "1800") && has(x, "900") && has(x, ["BC", "B.C."])),
 
-    "q2": x => 1 * (has(x, ["something", "things"]) && has(x, ["changed"]))
+    "q2": x => 1 * (has(x, ["something", "things"]) && has(x, "changed"))
                 + 2 * has(x, ["good", "excellent"])
 }</textarea>
         </div>
