@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Automated Evaluation Testbed</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <script src="evaluate.js"></script>
+  </head>
+  <body>
+  <section class="section">
+    <div class="container">
+      <h1 class="title">
+        Automated Scoring Example
+      </h1>
+      <p class="subtitle">
+        Answer the questions below
+      </p>
+        <article class="message is-medium">
+          <div class="message-header">
+            <p>Text Title</p>
+          </div>
+          <div class="message-body">
+              Example text
+          </div>
+        </article>
+      <div class=box>
+        <div class="field">
+          <label class="label">What is the main idea?</label>
+          <div class="control">
+            <input id="q1" class="input" placeholder="">
+          </div>
+          <div id="q1_score" class="message">Score:</div>
+        </div>
+
+        <div class="field">
+          <label class="label">Who does ....?</label>
+          <div class="control">
+            <input id="q2" class="input" placeholder="">
+          </div>
+          <div id="q2_score" class="message">Score:</div>
+        </div>
+
+        <button class="button is-primary" onclick="evaluateAnswers()">Evaluate</button>
+</      form>
+    </div>
+      <div class=box>
+        <div class="field">
+          <p class=subtitle>Constructs used</p>
+          <p>
+          Andean + (develop*/chang*/evol*/transition*) = 1pt <br>
+          1800 + 900 + (BC/B.C.) = 1pt
+          </p>
+          
+        </div>
+        <div class="field">
+            <p class=subtitle>Code</p>
+            <code>has(x, [...])</code> takes a list of possible synonyms of a keyword, and returns 1 if the student answer contains any, 0 if not.<br>
+            This value is then multiplied with the score multiplier.<br>
+            <code>&&</code> is a logical operator meaning "and". Used to create score points if both keywords occur at the same time in the answer.
+        </div>
+        <div class="field">
+            <textarea id="evaltable" class="textarea" rows=8>var evaluationTable = {
+    "q1": x => 1 * (has(x, ["Andean"]) && has(x, ["develop", "chang", "evol", "transition"]))
+                + 1 * (has(x, ["1800"]) && has(x, ["900"]) && has(x, ["BC", "B.C."])),
+
+    "q2": x => 1 * (has(x, ["something", "things"]) && has(x, ["changed"]))
+                + 2 * has(x, ["good", "excellent"])
+}</textarea>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
