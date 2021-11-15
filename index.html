@@ -6,6 +6,7 @@
     <title>Automated Evaluation Testbed</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <script src="evaluate.js"></script>
+    <link rel="stylesheet" href="collapsible.css">
   </head>
   <body>
   <section class="section">
@@ -18,40 +19,137 @@
       </p>
         <article class="message is-medium">
           <div class="message-header">
-            <p>Text Title</p>
+            <p>Castle</p>
           </div>
           <div class="message-body">
-              Example text
+              The day had begun like any ordinary July day in Montana, with a bright blue sky, and hot sunshine. A few bubbling clouds were blowing across, as we made our way in the footsteps of Calamity Jane , towards an ancient mining town called Castle. In the days when the West was Wild, Castle was a rough and busy town, full of miners looking for silver and gold. Jane stayed there for a few years, running a bar. Today, Castle is a "ghost town", a collection of old wooden buildings, some still standing, others just a pile of fallen boards and planks of wood. Abandoned over 100 years ago, when the mines ran out of precious metals, Castle now lies in the middle of nowhere, miles from a paved road, miles from civilisation.<br>
+              <a href="https://linguapress.com/intermediate/tornado.htm">source</a>
           </div>
         </article>
       <div class=box>
         <div class="field">
-          <label class="label">What is the main idea?</label>
+          <label class="label">q1. What kind of a town was Castle back in Wild West days?</label>
           <div class="control">
             <input id="q1" class="input" placeholder="">
           </div>
           <div id="q1_score" class="message">Score:</div>
+          <button type="button" class="collapsible">Answers</button>
+          <div class="collapsible-content">
+            <p>Castle was a rough and busy town, full of miners looking for silver and gold. (Model answer)</p>
+            <p><b>Constructs used</b></p>
+            <p>
+            rough & busy = 1pt <br>
+            min* & silver & gold = 1pt
+            </p>
+          </div>
         </div>
 
         <div class="field">
-          <label class="label">Who does ....?</label>
+          <label class="label">q2. When was Castle abandoned?</label>
           <div class="control">
             <input id="q2" class="input" placeholder="">
           </div>
           <div id="q2_score" class="message">Score:</div>
+          <button type="button" class="collapsible">Answers</button>
+          <div class="collapsible-content">
+            <p>It was abandoned over 100 years ago. (Model answer)</p>
+            <p>When the mines ran out of precious metals. (Uh oh, we didn't consider this one)</p>
+            <p><b>Constructs used</b></p>
+            <p>
+            over & 100/hundred & year* & ago = 2pt <br>
+            </p>
+            <button type="button" class="collapsible">Alternative Construct & Code</button>
+            <div class="collapsible-content">
+                <p>
+                (over & 100/hundred & year* & ago) | (ran/run & out of & precious & metal*) = 2pt<br>
+                </p>
+                <code>"q2": x => 2 * ((has(x, "over") && has(x, ["100", "hundred"]) && has(x, "year") && has(x, "ago"))<br>
+                || (has(x, ["ran", "run"]) && has(x, "out of") && has(x, "precious") && has(x, "metal"))),</code>
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">q3. Where is Castle now?</label>
+          <div class="control">
+            <input id="q3" class="input" placeholder="">
+          </div>
+          <div id="q3_score" class="message">Score:</div>
+          <button type="button" class="collapsible">Answers</button>
+          <div class="collapsible-content">
+            <p>Castle now lies in the middle of nowhere. (Model answer)</p>
+            <p>Miles from a paved road.</p>
+            <p>Miles from civilisation.</p>
+            <p>(Try including all the text "kitchen sink")</p>
+            <p><b>Constructs used</b></p>
+            <p>
+            middle & of & nowhere = 2pt
+            </p>
+          </div>
         </div>
 
         <button class="button is-primary" onclick="evaluateAnswers()">Evaluate</button>
 </      form>
     </div>
       <div class=box>
+        <p class=subtitle>Sample questions from the article</p>
+        <div class="field">
+          <label class="label">q4. What is the main idea? (South America...)</label>
+          <div class="control">
+            <input id="q4" class="input" placeholder="">
+          </div>
+          <div id="q4_score" class="message">Score:</div>
+          <button type="button" class="collapsible">Answers</button>
+          <div class="collapsible-content">
+            <p>Between 1800 and 900 B.C., the way of life in Andean South America changed drastically. (Model answer)</p>
+            <p><b>Constructs used</b></p>
+            <p>
+            Andean & (develop*/chang*/evol*/transition*) = 1pt <br>
+            1800 & 900 & (BC/B.C.) = 1pt
+            </p>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">q5. The goals of alliance formation in a South American tribe.</label>
+          <div class="control">
+            <input id="q5" class="input" placeholder="">
+          </div>
+          <div id="q5_score" class="message">Score:</div>
+          <button type="button" class="collapsible">Answers</button>
+          <div class="collapsible-content">
+            <p>intervillage solidarity and military interdependence (Model answer)</p>
+            <p>To bring people from 2 different villages together, to decrease fights/wars. (Very good but does not get any score)</p>
+            <p><b>Constructs used</b></p>
+            <p>
+            (intervillage & solidarity) = 1pt<br>
+            (militar* & interdepend*) = 1pt
+            </p>
+            <button type="button" class="collapsible">Alternative Construct & Code</button>
+            <div class="collapsible-content">
+                <p>
+                (intervillage & solidarity) | (bring & together) = 1pt<br>
+                (militar* & interdepend*) | (decreas* & fight*/war*) = 1pt
+                </p>
+                <code> "q5": x => 1 * ((has(x, "intervillage") && has(x, "solidarity")) || (has(x, "bring") && has(x, "together")))<br>
+                    + 1 * ((has(x, "militar") && has(x, "interdepend")) || (has(x, "decreas") && has(x, ["fight", "war"])))</code>
+            </div>
+          </div>
+        </div>
+        <button class="button is-primary" onclick="evaluateAnswers()">Evaluate</button>
+      </div>
+      <div class=box>
         <div class="field">
           <p class=subtitle>Constructs used</p>
-          <p>
-          Andean & (develop*/chang*/evol*/transition*) = 1pt <br>
-          1800 & 900 & (BC/B.C.) = 1pt
-          </p>
-          
+          <div>
+            <p><b>q1</b>: rough & busy = 1pt <br>
+            min* & silver & gold = 1pt</p><br>
+            <p><b>q2</b>: over & 100/hundred & year* & ago = 2pt</p><br>
+            <p><b>q3</b>: middle & of & nowhere = 2pt</p><br>
+            <p><b>q4</b>: Andean & (develop*/chang*/evol*/transition*) = 1pt <br>
+            1800 & 900 & (BC/B.C.) = 1pt</p><br>
+            <p><b>q5</b>: (intervillage & solidarity) = 1pt
+            (militar* & interdepend*) = 1pt</p>
+          </div>
         </div>
         <div class="field">
             <p class=subtitle>Code</p>
@@ -60,15 +158,23 @@
             <code>&&</code> is a logical operator meaning "and". Used to create score points if both keywords occur at the same time in the answer.
         </div>
         <div class="field">
-            <textarea id="evaltable" class="textarea" rows=8>var evaluationTable = {
-    "q1": x => 1 * (has(x, "Andean") && has(x, ["develop", "chang", "evol", "transition"]))
+            <textarea id="evaltable" class="textarea" rows=16>var evaluationTable = {
+    "q1": x => 1 * (has(x, "rough") && has(x, "busy"))
+                + 1 * (has(x, "min") && has(x, "silver") && has(x, "gold")),
+
+    "q2": x => 2 * (has(x, "over") && has(x, ["100", "hundred"]) && has(x, "year") && has(x, "ago")),
+
+    "q3": x => 2 * (has(x, "middle") && has(x, "of") && has(x, "nowhere")),
+
+    "q4": x => 1 * (has(x, "Andean") && has(x, ["develop", "chang", "evol", "transition"]))
                 + 1 * (has(x, "1800") && has(x, "900") && has(x, ["BC", "B.C."])),
 
-    "q2": x => 1 * (has(x, ["something", "things"]) && has(x, "changed"))
-                + 2 * has(x, ["good", "excellent"])
+    "q5": x => 1 * (has(x, "intervillage") && has(x, "solidarity"))
+                + 1 * (has(x, "militar") &&  has(x, "interdepend"))
 }</textarea>
         </div>
       </div>
     </section>
+    <script src="collapsible.js"></script>
   </body>
 </html>
